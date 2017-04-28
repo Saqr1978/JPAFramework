@@ -6,17 +6,14 @@
 package reservation.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 /**
@@ -24,28 +21,23 @@ import javax.persistence.OneToMany;
  * @author formation
  */
 @Entity
-public class Chambre implements Serializable {
+public class Client implements Serializable {
 
-    public Chambre() {
+    public Client() {
     }
+    
+    @OneToMany(mappedBy = "client")
+    private Set<Reservation> rsv = new HashSet<>();
 
-    @Column(unique = true, nullable = false, length = 32)
+    @Column(nullable = false, length = 32)
     private String nom;
+    @Column(nullable = false, length = 32)
+    private String prenom;
+    @Column(nullable = false)
+    private Integer age;
+    @Embedded
+    private Adresse adr;
 
-    @Column(nullable = false, name="price")
-    private Double prix;
-
-    @Column(length = 4096)
-    private String description;
-    
-    //relation hotel-chambres
-    @ManyToOne
-    @JoinColumn(name="hotel_id")
-    private Hotel hotel;
-
-    @OneToMany(mappedBy="chambre")
-    Set<Reservation> rsv=  new HashSet<>();
-    
     public String getNom() {
         return nom;
     }
@@ -54,38 +46,20 @@ public class Chambre implements Serializable {
         this.nom = nom;
     }
 
-    public String getDescription() {
-        return description;
+    public String getPrenom() {
+        return prenom;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
     }
 
-    public Hotel getHotel() {
-        return hotel;
+    public int getAge() {
+        return age;
     }
 
-    public void setHotel(Hotel hotel) {
-        this.hotel = hotel;
-    }
-    
-    
-
-    public Double getPrix() {
-        return prix;
-    }
-
-    public void setPrix(Double prix) {
-        this.prix = prix;
-    }
-
-    public String getDescrption() {
-        return description;
-    }
-
-    public void setDescrption(String descrption) {
-        this.description = descrption;
+    public void setAge(int age) {
+        this.age = age;
     }
 
     private static final long serialVersionUID = 1L;
@@ -111,10 +85,10 @@ public class Chambre implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Chambre)) {
+        if (!(object instanceof Client)) {
             return false;
         }
-        Chambre other = (Chambre) object;
+        Client other = (Client) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -123,7 +97,7 @@ public class Chambre implements Serializable {
 
     @Override
     public String toString() {
-        return "reservation.entity.Chambre[ id=" + id + " ]";
+        return "reservation.entity.Client[ id=" + id + " ]";
     }
 
 }

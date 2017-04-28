@@ -3,6 +3,11 @@
   <persistence-unit name="PU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>reservation.entity.Chambre</class>
+    <class>reservation.entity.Client</class>
+    <class>reservation.entity.Hotel</class>
+    <class>reservation.entity.Reservation</class>
+    <class>reservation.entity.Commande</class>
+    <class>reservation.entity.Article</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/reservation"/>
       <property name="javax.persistence.jdbc.user" value="reservation"/>
